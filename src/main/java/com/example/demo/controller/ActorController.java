@@ -27,8 +27,8 @@ public class ActorController {
     @Autowired
     ActorRepository actorRepository;
 
-    @GetMapping("/findAll")
-    public ResponseEntity<List<Actor>> findActor(@RequestParam() int top){
+    @GetMapping()
+    public ResponseEntity<List<Actor>> showAll(@RequestParam() int top){
         Pageable limit = PageRequest.of(0, top);
         List<Actor> list = actorRepository.findActor(limit);
         return list.size() == 0
@@ -37,12 +37,9 @@ public class ActorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Actor> findActorById(@PathVariable int id){
+    public Actor findActorById(@PathVariable int id){
         
-        Actor actor = actorRepository.findById(id).get();
-        return actor == null
-            ? ResponseEntity.noContent().build()
-            : ResponseEntity.ok().body(actor);
+            return actorRepository.getById(id);
     }
 
     @PostMapping

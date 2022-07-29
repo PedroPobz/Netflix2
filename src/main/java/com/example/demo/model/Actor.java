@@ -1,12 +1,21 @@
 package com.example.demo.model;
 
+
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Actor{
 	
 	@Id
@@ -16,9 +25,7 @@ public class Actor{
 
 	@NotEmpty
     private String name;
-    
-/* 	@ManyToMany
-	Set<Title> titleId; */
+ 
 	
     public Actor() {
 		super();
@@ -30,19 +37,6 @@ public class Actor{
 		super();
 		this.name = name;
 	}
-
-
-
-/* 	public Set<Title> getTitleId() {
-		return titleId;
-	} */
-
-
-
-/* 	public void setTitleId(Set<Title> titleId) {
-		this.titleId = titleId;
-	} */
-
 
 
 	public Integer getId() {
