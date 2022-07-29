@@ -6,10 +6,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
+
+import org.hibernate.annotations.ManyToAny;
 
 import com.example.demo.Validation.MaxCurrentYear;
 
@@ -34,6 +39,14 @@ public class Title {
 	private String description;
     @PositiveOrZero @Max(10)
 	private double user_rating;
+
+	@ManyToMany
+	@JoinTable(
+		name = "title_actor",
+		joinColumns = @JoinColumn(name = "title_id"),
+		inverseJoinColumns = @JoinColumn(name = "actor_id")
+	)
+	Set<Actor> actor;
 	
 
 	public Title() {

@@ -26,6 +26,8 @@ public class Actor{
 	@NotEmpty
     private String name;
  
+	@ManyToMany(mappedBy = "actor")
+	Set<Title> title;
 	
     public Actor() {
 		super();
