@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.model.Actor;
 import com.example.demo.model.Category;
+import com.example.demo.repository.ActorRepository;
 import com.example.demo.repository.CategoryRepository;
 
 @RestController
@@ -26,24 +28,22 @@ public class CategoryController {
 	   @Autowired
 	    CategoryRepository categoryRepository;
 
-	  
+	   @GetMapping()
+	    public ResponseEntity<List<Category>> showAll(@RequestParam() int top){
+	        Pageable limit = PageRequest.of(0, top);
+	        List<Category> list = categoryRepository.findCategory(limit);
+	        return list.size() == 0
+	        ? ResponseEntity.noContent().build()
+	        : ResponseEntity.ok().body(list);
+	    }
+	    
+	    
 
-	    @GetMapping()
-	    public ResponseEntity<List<Category>> showAll(@RequestParam int top) {
-
-			Pageable limit = PageRequest.of(0, top);
-
-			List<Category> list = categoryRepository.findCategory(limit);
-
-			return list.size() == 0 
-					? ResponseEntity.noContent().build() 
-					: ResponseEntity.ok().body(list);
-		}
 
 		@GetMapping("/{id}")
 		public ResponseEntity<Category> showOne(@PathVariable int id) {
 
-			Category item = categoryRepository.getById(id);
+			Category item = categoryRepository.getOne(id);
 
 			return item == null 
 					? ResponseEntity.notFound().build() 
@@ -61,7 +61,7 @@ public class CategoryController {
 		}
 
 		@DeleteMapping("/{id}")
-		public ResponseEntity<Category> deleteById(@PathVariable int id) {
+		public ResponseEntity deleteById(@PathVariable int id) {
 			categoryRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}

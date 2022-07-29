@@ -11,6 +11,13 @@ import com.example.demo.model.Title;
 
 @Repository
 public interface TitleRepository extends JpaRepository<Title, Integer>{
-    @Query("select t from Title t")
+    @Query("select w from Title w")
     public List<Title> findTitle(Pageable p);
+    @Query("select w from Title w order by user_rating desc")
+	public List<Title> getBest(Pageable limit);
+    @Query("select t from Title t join t.category c where c.id = ?1 order by t.user_rating desc")
+    public List<Title> getBestByCategory( Integer category_id, Pageable limit);
+    
+    
+    
 }
