@@ -16,6 +16,8 @@ public class Director {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@ManyToMany(mappedBy = "director")
+	Set<Title> title;
 
 	@NotEmpty
     private String name;

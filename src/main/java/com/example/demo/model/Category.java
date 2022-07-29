@@ -24,6 +24,9 @@ public class Category {
 	@NotEmpty
     private String name;
 
+	@ManyToMany(mappedBy = "category")
+	Set<Title> title;
+
 	public Category(Integer id, @NotEmpty String name) {
 		super();
 		this.id = id;

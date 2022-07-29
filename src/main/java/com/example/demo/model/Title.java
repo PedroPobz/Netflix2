@@ -47,7 +47,22 @@ public class Title {
 		inverseJoinColumns = @JoinColumn(name = "actor_id")
 	)
 	Set<Actor> actor;
+
+	@ManyToMany
+	@JoinTable(
+		name = "title_director",
+		joinColumns = @JoinColumn(name = "title_id"),
+		inverseJoinColumns = @JoinColumn(name = "director_id")
+	)
+	Set<Director> director;
 	
+	@ManyToMany
+	@JoinTable(
+		name = "title_category",
+		joinColumns = @JoinColumn(name = "title_id"),
+		inverseJoinColumns = @JoinColumn(name = "category_id")
+	)
+	Set<Category> category;
 
 	public Title() {
 		super();
