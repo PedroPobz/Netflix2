@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.Actor;
 import com.example.demo.model.Category;
-import com.example.demo.repository.ActorRepository;
 import com.example.demo.repository.CategoryRepository;
 
 @RestController
@@ -40,7 +38,7 @@ public class CategoryController {
 		@GetMapping("/{id}")
 		public ResponseEntity<Category> showOne(@PathVariable int id) {
 
-			Category item = categoryRepository.getOne(id);
+			Category item = categoryRepository.getById(id);
 
 			return item == null 
 					? ResponseEntity.notFound().build() 
@@ -58,7 +56,7 @@ public class CategoryController {
 		}
 
 		@DeleteMapping("/{id}")
-		public ResponseEntity deleteById(@PathVariable int id) {
+		public ResponseEntity<Category> deleteById(@PathVariable int id) {
 			categoryRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}
