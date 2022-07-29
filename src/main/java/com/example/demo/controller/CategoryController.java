@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.Actor;
 import com.example.demo.model.Category;
-import com.example.demo.repository.ActorRepository;
 import com.example.demo.repository.CategoryRepository;
 
 @RestController
@@ -28,9 +29,11 @@ public class CategoryController {
 	  
 
 	    @GetMapping()
-	    public ResponseEntity<List<Category>> showAll() {
+	    public ResponseEntity<List<Category>> showAll(@RequestParam int top) {
 
-			List<Category> list = categoryRepository.findAll();
+			Pageable limit = PageRequest.of(0, top);
+
+			List<Category> list = categoryRepository.findCategory(limit);
 
 			return list.size() == 0 
 					? ResponseEntity.noContent().build() 
@@ -40,7 +43,7 @@ public class CategoryController {
 		@GetMapping("/{id}")
 		public ResponseEntity<Category> showOne(@PathVariable int id) {
 
-			Category item = categoryRepository.getOne(id);
+			Category item = categoryRepository.getById(id);
 
 			return item == null 
 					? ResponseEntity.notFound().build() 
@@ -58,7 +61,7 @@ public class CategoryController {
 		}
 
 		@DeleteMapping("/{id}")
-		public ResponseEntity deleteById(@PathVariable int id) {
+		public ResponseEntity<Category> deleteById(@PathVariable int id) {
 			categoryRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}

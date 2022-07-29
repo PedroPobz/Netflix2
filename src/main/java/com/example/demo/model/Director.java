@@ -1,9 +1,12 @@
 package com.example.demo.model;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotEmpty;
 @Entity
 public class Director {
@@ -16,7 +19,6 @@ public class Director {
 
 	@NotEmpty
     private String name;
-
 
 	public Director(Integer id, @NotEmpty String name) {
 		super();
@@ -48,7 +50,7 @@ public class Director {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	
 	
 }
